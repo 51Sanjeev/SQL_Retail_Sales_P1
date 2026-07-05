@@ -40,8 +40,41 @@ CREATE TABLE retail_sales
     total_sale FLOAT
 );
 ```
-
-### 2. Data Exploration & Cleaning
+### 2. Load the Database in sql
+```sql
+LOAD DATA LOCAL INFILE 'E:/MYSQL/Retail_Sales_P1/SQL - Retail Sales Analysis_utf.csv'
+INTO TABLE Retail_Sales_tb
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS
+(
+    @transactions_id,
+    @sale_date,
+    @sale_time,
+    @customer_id,
+    @gender,
+    @age,
+    @category,
+    @quantiy,
+    @price_per_unit,
+    @cogs,
+    @total_sale
+)
+SET
+transactions_id = NULLIF(@transactions_id,''),
+sale_date = NULLIF(@sale_date,''),
+sale_time = NULLIF(@sale_time,''),
+customer_id = NULLIF(@customer_id,''),
+gender = NULLIF(@gender,''),
+age = NULLIF(@age,''),
+category = NULLIF(@category,''),
+quantiy = NULLIF(@quantiy,''),
+price_per_unit = NULLIF(@price_per_unit,''),
+cogs = NULLIF(@cogs,''),
+total_sale = NULLIF(@total_sale,'');
+```
+### 3. Data Exploration & Cleaning
 
 - **Record Count**: Determine the total number of records in the dataset.
 - **Customer Count**: Find out how many unique customers are in the dataset.
@@ -66,7 +99,7 @@ WHERE
     quantity IS NULL OR price_per_unit IS NULL OR cogs IS NULL;
 ```
 
-### 3. Data Analysis & Findings
+### 4. Data Analysis & Findings
 
 The following SQL queries were developed to answer specific business questions:
 
